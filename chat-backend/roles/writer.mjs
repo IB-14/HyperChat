@@ -3,8 +3,19 @@ import Hyperswarm from 'hyperswarm'
 import goodbye from 'graceful-goodbye'
 import b4a from 'b4a'
 
+let store;
+
+export async function getPublicKey() {
+    const core = store.get({ name: 'core-1', valueEncoding: 'json'});
+    await core.ready();
+    const publicKey = b4a.toString(core.key, 'hex');
+
+    console.log('Public key from getPKey: ', publicKey)
+    return publicKey;
+}
+
 export default async (writerStorage) => {
-    const store = new Corestore(writerStorage)
+    store = new Corestore(writerStorage)
     const swarm = new Hyperswarm()
     goodbye(() => swarm.destroy())
 
@@ -50,5 +61,4 @@ export default async (writerStorage) => {
     })
 
     console.log("\n\nEND WRITER\n\n")
-    return publicKey;
 }

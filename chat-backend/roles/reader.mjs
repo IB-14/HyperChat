@@ -29,7 +29,7 @@ export default async (publicKey, readerStorage) => {
     // update the meta-data of the hypercore instance
     await core.update()
     
-    console.log("\n\nIN reader\n\n",core);
+    console.log("\n\nIN reader\n\n",readerStorage, core);
 
     if (core.length === 0) {
     console.log('Could not connect to the writer peer')

@@ -4,7 +4,7 @@ import Hyperbee from 'hyperbee'
 import Hyperswarm from 'hyperswarm'
 import readline from "readline";
 import reader from '../../roles/reader.mjs';
-import writer from '../../roles/writer.mjs';
+import writer, { getPublicKey } from '../../roles/writer.mjs';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -37,7 +37,7 @@ async function initializeUser(userName) {
 
     // wait till all the properties of the hypercore are initialized
     await core.ready()
-    return await writer(writerStorage)
+    await writer(writerStorage)
 }
 
 // function startReader() {
@@ -46,12 +46,20 @@ async function initializeUser(userName) {
 //         reader(publicKey, readerStorage);
 //         rl.close();
 //     });
-    
+     
 // }
 
-export function startReader(publicKey){
+export function startReader(userName, publicKey){ 
+    userStorage = `./chat-storage/${userName}-storage`; 
+    readerStorage = `${userStorage}/reader-storage`;
     reader(publicKey, readerStorage);
 }
+
+export async function startWriter(userName) {
+    userStorage = `./chat-storage/${userName}-storage`; 
+    writerStorage = `${userStorage}/writer-storage`;
+    await initializeUser(userName);
+} 
 
 export default async (uName) => {
     userName = uName;
@@ -62,5 +70,5 @@ export default async (uName) => {
     
     let key = await initializeUser(userName);
     //startReader();
-    return key;
+    // return key;
 }

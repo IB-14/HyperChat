@@ -1,0 +1,8 @@
+/chat-ui/node_modules
+/chat-backend/node_modules
+/chat-backend/.env
+/chat-backend/modules/chat/chat-storage
+/chat-backend/roles/reader-storage
+/chat-backend/roles/writer-storage
+/chat-backend/test/reader-storage
+/chat-backend/test/writer-storage
